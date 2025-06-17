@@ -22,8 +22,13 @@ export default function APP() {
         gap: '1rem',
       }}
     >
-      <div style={{ display: 'flex', flexDirection: 'column', width: '95.5vw', height: '97%' }}>
-        <Navbar />
+      <div style={{ display: 'flex', flexDirection: 'column', width: '95vw', height: '97%' }}>
+        <Navbar
+          name={vm.drawingName}
+          setName={vm.setDrawingName}
+          onExport={vm.exportJSON}
+          onImport={vm.importJSON}
+        />
         <div style={{ display: 'flex', flex: 1 }}>
           <Canvas vm={vm} tool={tool} />
           <Toolbar
