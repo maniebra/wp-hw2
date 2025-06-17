@@ -1,17 +1,19 @@
 import React from 'react';
-import { Circle as CircleIcon, Square as SquareIcon, Triangle as TriangleIcon, Eraser } from 'lucide-react';
+import { Circle as CircleIcon, Square as SquareIcon, Triangle as TriangleIcon, SaveIcon, UploadIcon,  Eraser } from 'lucide-react';
 import { type ShapeType } from '../../models/shapes';
 
 interface Props {
   tool: ShapeType | 'erase';
   setTool: (t: ShapeType | 'erase') => void;
+  onSave: () => void;
+  onLoad: () => void;
 }
 
-export default function Toolbar({ tool, setTool }: Props) {
-  const btn = (t: string) => ({
+export default function Toolbar({ tool, setTool, onSave, onLoad }: Props) {
+  const btn = (t?: string) => ({
     margin: '0.5rem',
     padding: '0.5rem 0.75rem',
-    border: tool === t ? '2px solid #00aaff' : '1px solid #555',
+    border: t ? (tool === t ? '2px solid #00aaff' : '1px solid #555') : '1px solid #555',
     background: 'transparent',
     color: '#fff',
     display: 'flex',
@@ -49,6 +51,18 @@ export default function Toolbar({ tool, setTool }: Props) {
       <button style={btn('erase')} onClick={() => setTool('erase')}>
         <Eraser size={20} />
         <span style={label}>Erase</span>
+      </button>
+
+      {/* Divider line */}
+      <div style={{ width: '70%', borderTop: '1px solid #555', margin: '0.5rem 0' }} />
+
+      <button style={btn()} onClick={onSave}>
+        <SaveIcon size={20} />
+        <span style={label}>Save</span>
+      </button>
+      <button style={btn()} onClick={onLoad}>
+        <UploadIcon size={20} />
+        <span style={label}>Load</span>
       </button>
     </aside>
   );

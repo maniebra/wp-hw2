@@ -3,17 +3,11 @@ import { type Shape, type ShapeType } from '../models/shapes';
 import { loadShapes, saveShapes } from '../utils/storage';
 import { pointInShape } from '../utils/geometry';
 
-
 const SIZE = 40;
 const uid = () => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 
 export const useCanvasVM = () => {
-  const [shapes, setShapes] = useState<Shape[]>([]);
-
-  // hydrated state
-  useEffect(() => setShapes(loadShapes), []);
-  // persist
-  useEffect(() => saveShapes(shapes), [shapes]);
+  const [shapes, setShapes] = useState<Shape[]>(() => loadShapes());
 
   const add = useCallback((type: ShapeType, x: number, y: number) => {
     setShapes((prev) => [...prev, { id: uid(), type, x, y, size: SIZE }]);
@@ -23,5 +17,13 @@ export const useCanvasVM = () => {
     setShapes((prev) => prev.filter((s) => !pointInShape(s, x, y)));
   }, []);
 
-  return { shapes, add, removeAt } as const;
+  const saveCurrent = useCallback(() => {
+    saveShapes(shapes);
+  }, [shapes]);
+
+  const loadFromStorage = useCallback(() => {
+    setShapes(loadShapes());
+  }, []);
+
+  return { shapes, add, removeAt, saveCurrent, loadFromStorage } as const;
 };
