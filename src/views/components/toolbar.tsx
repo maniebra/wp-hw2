@@ -54,7 +54,6 @@ export default function Toolbar({ tool, setTool, onSave, onLoad }: Props) {
         <span style={label}>Erase</span>
       </button>
 
-      {/* Divider line */}
       <div style={{ width: '70%', borderTop: '1px solid #555', margin: '0.5rem 0' }} />
 
       <button style={btn()} onClick={onSave}>

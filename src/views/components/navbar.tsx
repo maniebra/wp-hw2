@@ -15,7 +15,7 @@ export default function Navbar({ name, setName, onExport, onImport }: Props) {
       style={{
         width: "95.75vw",
         backgroundColor: '#222',
-        padding: '0.75rem 2rem',
+        padding: '0.7rem 2rem',
         margin: "0.5rem",
         marginBottom: "1rem",
         borderRadius: '100rem',
@@ -26,7 +26,6 @@ export default function Navbar({ name, setName, onExport, onImport }: Props) {
         gap: '0.5rem',
       }}
     >
-      {/* left: editable name */}
       <input
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -41,7 +40,6 @@ export default function Navbar({ name, setName, onExport, onImport }: Props) {
         }}
       />
 
-      {/* right: import/export buttons */}
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         <button
           onClick={onExport}
@@ -55,7 +53,6 @@ export default function Navbar({ name, setName, onExport, onImport }: Props) {
         >
           Import JSON
         </button>
-        {/* hidden file chooser */}
         <input
           ref={fileInput}
           type="file"
