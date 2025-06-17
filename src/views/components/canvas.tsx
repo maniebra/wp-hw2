@@ -33,55 +33,68 @@ export default function Canvas({ vm, tool }: Props) {
     resize();
     window.addEventListener('resize', resize);
     return () => window.removeEventListener('resize', resize);
-  }, []); 
+  }, []);
 
   useEffect(repaint, [vm.shapes]);
 
   useEffect(() => {
     const canvas = ref.current!;
 
-    const getCursor = (e: MouseEvent) => {
+    const cursorPos = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       return { x: e.clientX - rect.left, y: e.clientY - rect.top };
     };
 
-    const mousedown = (e: MouseEvent) => {
-      const { x, y } = getCursor(e);
+    const onMouseDown = (e: MouseEvent) => {
+      const { x, y } = cursorPos(e);
       for (let i = vm.shapes.length - 1; i >= 0; i--) {
         const s = vm.shapes[i];
         if (pointInShape(s, x, y)) {
-          dragRef.current = { id: s.id, offsetX: x - s.x, offsetY: y - s.y };
-          return; 
+          if (tool === 'erase') {
+            vm.removeAt(x, y);
+          } else {
+            dragRef.current = { id: s.id, offsetX: x - s.x, offsetY: y - s.y };
+          }
+          return;
         }
       }
-
-      if (tool === 'erase') vm.removeAt(x, y);
-      else vm.add(tool as ShapeType, x, y);
+      if (tool !== 'erase') vm.add(tool as ShapeType, x, y);
     };
 
-    const mousemove = (e: MouseEvent) => {
+    const onMouseMove = (e: MouseEvent) => {
       if (!dragRef.current) return;
-      const { x, y } = getCursor(e);
+      const { x, y } = cursorPos(e);
       const { id, offsetX, offsetY } = dragRef.current;
       vm.updateShapePosition(id, x - offsetX, y - offsetY);
     };
 
-    const stopDrag = () => {
+    const endDrag = () => {
       dragRef.current = null;
     };
 
-    canvas.addEventListener('mousedown', mousedown);
-    window.addEventListener('mousemove', mousemove);
-    window.addEventListener('mouseup', stopDrag);
-    canvas.addEventListener('mouseleave', stopDrag);
+    canvas.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', endDrag);
+    canvas.addEventListener('mouseleave', endDrag);
 
     return () => {
-      canvas.removeEventListener('mousedown', mousedown);
-      window.removeEventListener('mousemove', mousemove);
-      window.removeEventListener('mouseup', stopDrag);
-      canvas.removeEventListener('mouseleave', stopDrag);
+      canvas.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', endDrag);
+      canvas.removeEventListener('mouseleave', endDrag);
     };
   }, [tool, vm]);
 
-  return <canvas ref={ref} style={{ flex: 1, background: '#222', margin: "0 0.5rem", borderRadius: "1rem", cursor: 'pointer' }} />;
+  return (
+    <canvas
+      ref={ref}
+      style={{ 
+        flex: 1,
+        cursor: tool === 'erase' ? 'not-allowed' : 'pointer',
+        borderRadius: '1rem',
+        border: '1px solid #555',
+        margin: "0 0.5rem"
+      }}
+    />
+  );
 }

@@ -15,8 +15,9 @@ export default function Navbar({ name, setName, onExport, onImport }: Props) {
       style={{
         width: "95.75vw",
         backgroundColor: '#222',
-        padding: '0.5rem 2rem',
+        padding: '0.75rem 2rem',
         margin: "0.5rem",
+        marginBottom: "1rem",
         borderRadius: '100rem',
         textAlign: 'center',
         display: 'flex',
