@@ -13,8 +13,9 @@ export default function Navbar({ name, setName, onExport, onImport }: Props) {
   return (
     <header
       style={{
+        width: "95.75vw",
         backgroundColor: '#222',
-        padding: '0.5rem',
+        padding: '0.5rem 2rem',
         margin: "0.5rem",
         borderRadius: '100rem',
         textAlign: 'center',

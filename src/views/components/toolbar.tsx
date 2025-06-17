@@ -11,7 +11,6 @@ interface Props {
 
 export default function Toolbar({ tool, setTool, onSave, onLoad }: Props) {
   const btn = (t?: string) => ({
-    margin: '0.5rem',
     padding: '0.5rem 0.75rem',
     border: t ? (tool === t ? '2px solid #00aaff' : '1px solid #555') : '1px solid #555',
     background: 'transparent',
@@ -21,7 +20,7 @@ export default function Toolbar({ tool, setTool, onSave, onLoad }: Props) {
     alignItems: 'center',
     gap: '0.25rem',
     cursor: 'pointer',
-    width: '90%',
+    width: '80%',
   });
 
   const label: React.CSSProperties = { fontSize: '0.7rem' };
@@ -29,7 +28,9 @@ export default function Toolbar({ tool, setTool, onSave, onLoad }: Props) {
   return (
     <aside
       style={{
-        width: '130px',
+        backgroundColor: '#222',
+        borderRadius: "1rem",
+        width: '100px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -37,19 +38,19 @@ export default function Toolbar({ tool, setTool, onSave, onLoad }: Props) {
       }}
     >
       <button style={btn('circle')} onClick={() => setTool('circle')}>
-        <CircleIcon size={20} />
+        <CircleIcon size={16} />
         <span style={label}>Circle</span>
       </button>
       <button style={btn('square')} onClick={() => setTool('square')}>
-        <SquareIcon size={20} />
+        <SquareIcon size={16} />
         <span style={label}>Square</span>
       </button>
       <button style={btn('triangle')} onClick={() => setTool('triangle')}>
-        <TriangleIcon size={20} />
+        <TriangleIcon size={16} />
         <span style={label}>Triangle</span>
       </button>
       <button style={btn('erase')} onClick={() => setTool('erase')}>
-        <Eraser size={20} />
+        <Eraser size={16} />
         <span style={label}>Erase</span>
       </button>
 

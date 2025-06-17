@@ -13,7 +13,6 @@ export const useCanvasVM = () => {
   const [shapes, setShapes] = useState<Shape[]>(initial.shapes);
   const [drawingName, setDrawingName] = useState<string>(initial.name);
 
-  // ───────── drawing actions ─────────
   const add = useCallback((type: ShapeType, x: number, y: number) => {
     setShapes((prev) => [...prev, { id: uid(), type, x, y, size: SIZE }]);
   }, []);
@@ -22,7 +21,10 @@ export const useCanvasVM = () => {
     setShapes((prev) => prev.filter((s) => !pointInShape(s, x, y)));
   }, []);
 
-  // ───────── persistence ─────────
+  const updateShapePosition = useCallback((id: string, x: number, y: number) => {
+    setShapes((prev) => prev.map((s) => (s.id === id ? { ...s, x, y } : s)));
+  }, []);
+
   const saveCurrent = useCallback(() => {
     saveProject({ name: drawingName || 'Untitled', shapes });
   }, [drawingName, shapes]);
@@ -33,7 +35,6 @@ export const useCanvasVM = () => {
     setShapes(stored);
   }, []);
 
-  // ───────── export / import ─────────
   const exportJSON = useCallback(() => {
     const blob = new Blob([JSON.stringify({ name: drawingName || 'Untitled', shapes }, null, 2)], {
       type: 'application/json',
@@ -67,6 +68,7 @@ export const useCanvasVM = () => {
     setDrawingName,
     add,
     removeAt,
+    updateShapePosition,
     saveCurrent,
     loadFromStorage,
     exportJSON,
