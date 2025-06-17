@@ -19,6 +19,7 @@ export default function APP() {
         color: '#fff',
         fontFamily: 'sans-serif',
         display: 'flex',
+        gap: '1rem',
       }}
     >
       <div style={{ display: 'flex', flexDirection: 'column', width: '95.5vw', height: '97%' }}>

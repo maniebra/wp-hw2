@@ -1,5 +1,5 @@
 import React from 'react';
-import { Circle as CircleIcon, Square as SquareIcon, Triangle as TriangleIcon, SaveIcon, UploadIcon,  Eraser } from 'lucide-react';
+import { Circle as CircleIcon, Square as SquareIcon, Triangle as TriangleIcon, SaveIcon, UploadIcon, Eraser } from 'lucide-react';
 import { type ShapeType } from '../../models/shapes';
 
 interface Props {
@@ -30,9 +30,9 @@ export default function Toolbar({ tool, setTool, onSave, onLoad }: Props) {
     <aside
       style={{
         width: '130px',
-        borderLeft: '1px solid #444',
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'center',
         alignItems: 'center',
       }}
     >

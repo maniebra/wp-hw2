@@ -9,7 +9,7 @@ interface Props {
 export default function Stats({ vm }: Props) {
   const c = useStatsVM(vm.shapes);
   return (
-    <footer className="p-2 border-t border-neutral-700 text-center text-sm">
+    <footer style={{ textAlign: "center" }}>
       Circles: {c.circle} | Squares: {c.square} | Triangles: {c.triangle}
     </footer>
   );

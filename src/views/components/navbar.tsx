@@ -4,9 +4,9 @@ export default function Navbar() {
   return (
     <header
       style={{
+        borderRadius: "1rem",
         padding: '0.5rem',
         textAlign: 'center',
-        borderBottom: '1px solid #444',
       }}
     >
       Paint-Line SPA

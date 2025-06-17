@@ -20,7 +20,6 @@ export default function Canvas({ vm, tool }: Props) {
     drawShapes(ctx, vm.shapes);
   };
 
-  // fit to parent + redraw on resize
   useEffect(() => {
     const canvas = ref.current!;
     const resize = () => {
@@ -33,11 +32,9 @@ export default function Canvas({ vm, tool }: Props) {
     resize();
     window.addEventListener('resize', resize);
     return () => window.removeEventListener('resize', resize);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
+  }, []); 
   useEffect(repaint, [vm.shapes]);
 
-  // click to draw / erase
   useEffect(() => {
     const canvas = ref.current!;
     const handler = (e: MouseEvent) => {
@@ -50,5 +47,5 @@ export default function Canvas({ vm, tool }: Props) {
     return () => canvas.removeEventListener('click', handler);
   }, [tool, vm]);
 
-  return <canvas ref={ref} style={{ flex: 1, background: 'transparent' }} />;
+  return <canvas ref={ref} style={{ flex: 1, background: 'transparent', border: '1px solid #444', borderRadius: '1rem' }} />;
 }
